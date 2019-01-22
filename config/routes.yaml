@@ -1,0 +1,3 @@
+#index:
+#    path: /search
+#    controller: App\Controller\SearchController::search
