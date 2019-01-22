@@ -13,12 +13,17 @@ class Attachment
     /**
      * @var string
      */
+    private $pretext;
+
+    /**
+     * @var string
+     */
     private $text;
 
     /**
      * @var string
      */
-    private $fallback = 'Search Failed';
+    private $fallback;
 
     /**
      * @var string
@@ -28,7 +33,12 @@ class Attachment
     /**
      * @var string
      */
-    private $attachmentType = 'default';
+    private $attachmentType;
+
+    /**
+     * @var string
+     */
+    private $imageUrl;
 
     /**
      * @var string
@@ -36,71 +46,194 @@ class Attachment
     private $thumbUrl;
 
     /**
-     * @var Action[]
+     * @var string
      */
-    private $actions = [];
+    private $footer;
 
     /**
-     * Constructor
-     *
-     * @param string $text
-     * @param string $callbackId
-     * @param string $thumbUrl
-     * @param string $query
+     * @var Action[]
      */
-    public function __construct(string $text, string $callbackId, string $thumbUrl, string $query)
+    private $actions;
+
+    /**
+     * @return string
+     */
+    public function getPretext(): ?string
     {
-        $this->text = $text;
-        $this->callbackId = $callbackId;
-        $this->thumbUrl = $thumbUrl;
-        $this->actions[] = new Action($query);
+        return $this->pretext;
+    }
+
+    /**
+     * @param string $pretext
+     * @return Attachment
+     */
+    public function setPretext(string $pretext): Attachment
+    {
+        $this->pretext = $pretext;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
 
     /**
+     * @param string $text
+     * @return Attachment
+     */
+    public function setText(string $text): Attachment
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function getFallback(): string
+    public function getFallback(): ?string
     {
         return $this->fallback;
     }
 
     /**
+     * @param string $fallback
+     * @return Attachment
+     */
+    public function setFallback(string $fallback): Attachment
+    {
+        $this->fallback = $fallback;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function getCallbackId(): string
+    public function getCallbackId(): ?string
     {
         return $this->callbackId;
     }
 
     /**
+     * @param string $callbackId
+     * @return Attachment
+     */
+    public function setCallbackId(string $callbackId): Attachment
+    {
+        $this->callbackId = $callbackId;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function getAttachmentType(): string
+    public function getAttachmentType(): ?string
     {
         return $this->attachmentType;
     }
 
     /**
+     * @param string $attachmentType
+     * @return Attachment
+     */
+    public function setAttachmentType(string $attachmentType): Attachment
+    {
+        $this->attachmentType = $attachmentType;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function getThumbUrl(): string
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @param string $imageUrl
+     * @return Attachment
+     */
+    public function setImageUrl(string $imageUrl): Attachment
+    {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThumbUrl(): ?string
     {
         return $this->thumbUrl;
     }
 
     /**
-     * @return Action[]
+     * @param string $thumbUrl
+     * @return Attachment
      */
-    public function getActions(): array
+    public function setThumbUrl(string $thumbUrl): Attachment
+    {
+        $this->thumbUrl = $thumbUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFooter(): ?string
+    {
+        return $this->footer;
+    }
+
+    /**
+     * @param string $footer
+     * @return Attachment
+     */
+    public function setFooter(string $footer): Attachment
+    {
+        $this->footer = $footer;
+
+        return $this;
+    }
+
+    /**
+     * @return SendAction[]
+     */
+    public function getActions(): ?array
     {
         return $this->actions;
+    }
+
+    /**
+     * @param Action[] $actions
+     * @return Attachment
+     */
+    public function setActions(array $actions): Attachment
+    {
+        $this->actions = $actions;
+
+        return $this;
+    }
+
+    /**
+     * @param Action $action
+     * @return Attachment
+     */
+    public function addAction(Action $action): Attachment
+    {
+        $this->actions[] = $action;
+
+        return $this;
     }
 }

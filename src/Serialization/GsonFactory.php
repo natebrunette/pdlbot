@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace App\Serialization;
 
+use App\Model\Interaction;
 use Tebru\Gson\Gson;
 
 /**
@@ -20,6 +21,7 @@ class GsonFactory
     public static function create(): Gson
     {
         return Gson::builder()
+            ->registerType(Interaction::class, new InteractionDeserializer())
             ->build();
     }
 }

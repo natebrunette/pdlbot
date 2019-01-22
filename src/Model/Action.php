@@ -13,75 +13,96 @@ class Action
     /**
      * @var string
      */
-    private $name = 'send';
+    protected $name;
 
     /**
      * @var string
      */
-    private $text = 'Send';
+    protected $text;
 
     /**
      * @var string
      */
-    private $style = 'primary';
+    protected $style;
 
     /**
      * @var string
      */
-    private $type = 'button';
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
-     * Constructor
-     *
-     * @param string $query
-     */
-    public function __construct(string $query)
-    {
-        $this->value = $query;
-    }
+    protected $type;
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
+     * @param string $name
+     * @return Action
+     */
+    public function setName(string $name): Action
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
 
     /**
+     * @param string $text
+     * @return Action
+     */
+    public function setText(string $text): Action
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function getStyle(): string
+    public function getStyle(): ?string
     {
         return $this->style;
     }
 
     /**
-     * @return string
+     * @param string $style
+     * @return Action
      */
-    public function getType(): string
+    public function setStyle(string $style): Action
     {
-        return $this->type;
+        $this->style = $style;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getValue(): string
+    public function getType(): ?string
     {
-        return $this->value;
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return Action
+     */
+    public function setType(string $type): Action
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

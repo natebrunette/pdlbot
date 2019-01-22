@@ -32,3 +32,9 @@ services:
 
     Tebru\Gson\Gson:
         factory: [App\Serialization\GsonFactory, create]
+
+    App\Client\SlackClient:
+        arguments:
+            - '@Tebru\Gson\Gson'
+            - '%env(resolve:SLACK_API_TOKEN)%'
+        factory: [App\Http\SlackClientFactory, create]
