@@ -4,6 +4,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    app.enable_cache: '%env(resolve:ENABLED_CACHE)%'
+    app.twitter.consumer_key: '%env(resolve:TWITTER_CONSUMER_KEY)%'
+    app.twitter.consumer_secret: '%env(resolve:TWITTER_CONSUMER_SECRET)%'
+    app.twitter.access_token: '%env(resolve:TWITTER_ACCESS_TOKEN)%'
+    app.twitter.access_secret: '%env(resolve:TWITTER_ACCESS_TOKEN_SECRET)%'
+    app.slack.api_token: '%env(resolve:SLACK_API_TOKEN)%'
 
 services:
     # default configuration for services in *this* file
@@ -27,14 +33,30 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Repository\ComicRepository:
-        arguments: [ App\Entity\Comic ]
         factory: 'doctrine:getRepository'
+        arguments: [ App\Entity\Comic ]
 
     Tebru\Gson\Gson:
         factory: [App\Serialization\GsonFactory, create]
+        arguments:
+            - '%app.enable_cache%'
+            - '%kernel.cache_dir%'
 
     App\Client\SlackClient:
+        factory: [App\Http\SlackClientFactory, create]
         arguments:
             - '@Tebru\Gson\Gson'
-            - '%env(resolve:SLACK_API_TOKEN)%'
-        factory: [App\Http\SlackClientFactory, create]
+            - '%app.slack.api_token%'
+            - '%app.enable_cache%'
+            - '%kernel.cache_dir%'
+
+    App\Client\TwitterClient:
+        factory: [App\Http\TwitterClientFactory, create]
+        arguments:
+            - '@Tebru\Gson\Gson'
+            - '%app.twitter.consumer_key%'
+            - '%app.twitter.consumer_secret%'
+            - '%app.twitter.access_token%'
+            - '%app.twitter.access_secret%'
+            - '%app.enable_cache%'
+            - '%kernel.cache_dir%'

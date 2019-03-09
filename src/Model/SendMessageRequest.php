@@ -28,17 +28,20 @@ class SendMessageRequest
      * @param string|null $imageUrl
      * @param string|null $footer
      */
-    public function __construct(string $channel, string $text, string $imageUrl, ?string $footer = null)
+    public function __construct(string $channel, string $text, ?string $imageUrl = null, ?string $footer = null)
     {
-        $this->channel = $channel;
         $attachment = new Attachment();
-        $attachment->setImageUrl($imageUrl)
-            ->setPretext($text);
+        $attachment->setPretext($text);
+
+        if ($imageUrl !== null) {
+            $attachment->setImageUrl($imageUrl);
+        }
 
         if ($footer !== null) {
             $attachment->setFooter($footer);
         }
 
+        $this->channel = $channel;
         $this->attachments[] = $attachment;
     }
 

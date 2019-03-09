@@ -19,7 +19,16 @@ use Tebru\RetrofitHttp\Guzzle6\Guzzle6HttpClient;
 
 class SlackClientFactory
 {
-    public function create(Gson $gson, string $slackApiToken): SlackClient
+    /**
+     * Create a slack client
+     *
+     * @param Gson $gson
+     * @param string $slackApiToken
+     * @param bool $enableCache
+     * @param string $cacheDir
+     * @return SlackClient
+     */
+    public static function create(Gson $gson, string $slackApiToken, bool $enableCache, string $cacheDir): SlackClient
     {
         $handlerStack = HandlerStack::create();
         $handlerStack->push(function (callable $next) use ($slackApiToken) {
@@ -35,8 +44,8 @@ class SlackClientFactory
             ->setBaseUrl('https://slack.com')
             ->addConverterFactory(new GsonConverterFactory($gson))
             ->setHttpClient(new Guzzle6HttpClient(new Client(['handler' => $handlerStack])))
-//            ->enableCache($this->enableCache)
-//            ->setCacheDir($cacheDir)
+            ->enableCache($enableCache)
+            ->setCacheDir($cacheDir)
             ->build()
             ->create(SlackClient::class);
 
