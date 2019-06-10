@@ -85,6 +85,12 @@ class TwitterEntities
             return true;
         }
 
+        foreach ($this->urls as $url) {
+            if (strpos($url['display_url'], 'poorlydrawnstore') !== false) {
+                return true;
+            }
+        }
+
         $webToons = strpos($this->urls[0]['display_url'], 'webtoons');
         $poorlyDrawn = strpos($this->urls[0]['display_url'], 'poorlydrawn');
 
